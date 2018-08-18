@@ -60,25 +60,6 @@ using Microsoft.VisualStudio.Shell;
 
 namespace VsTeXProject.VisualStudio.Project
 {
-    internal enum tagDVASPECT
-    {
-        DVASPECT_CONTENT = 1,
-        DVASPECT_THUMBNAIL = 2,
-        DVASPECT_ICON = 4,
-        DVASPECT_DOCPRINT = 8
-    }
-
-    internal enum tagTYMED
-    {
-        TYMED_HGLOBAL = 1,
-        TYMED_FILE = 2,
-        TYMED_ISTREAM = 4,
-        TYMED_ISTORAGE = 8,
-        TYMED_GDI = 16,
-        TYMED_MFPICT = 32,
-        TYMED_ENHMF = 64,
-        TYMED_NULL = 0
-    }
 
     internal sealed class DataCacheEntry : IDisposable
     {

@@ -152,6 +152,7 @@ namespace VsTeXProject.VisualStudio.Project
         private EventHandler<HierarchyNodeEventArgs> onChildAdded;
         private EventHandler<HierarchyNodeEventArgs> onChildRemoved;
         private List<HierarchyNode> itemsDraggedOrCutOrCopied;
+		private readonly OleServiceProvider oleServiceProvider = new OleServiceProvider();
 
         /// <summary>
         ///     Has the object been disposed.
@@ -290,11 +291,11 @@ namespace VsTeXProject.VisualStudio.Project
             get { return this; }
         }
 
-        #endregion
+		#endregion
 
-        #region properties
+		#region properties
 
-        public OleServiceProvider OleServiceProvider { get; } = new OleServiceProvider();
+		public OleServiceProvider OleServiceProvider => oleServiceProvider;
 
         [Browsable(false)]
         public ProjectNode ProjectMgr { get; set; }
@@ -1999,10 +2000,10 @@ namespace VsTeXProject.VisualStudio.Project
             if (disposing)
             {
                 // This will dispose any subclassed project node that implements IDisposable.
-                if (OleServiceProvider != null)
+                if (oleServiceProvider != null)
                 {
                     // Dispose the ole service provider object.
-                    OleServiceProvider.Dispose();
+                    oleServiceProvider.Dispose();
                 }
             }
 

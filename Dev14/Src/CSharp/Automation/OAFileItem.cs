@@ -88,7 +88,7 @@ namespace VsTeXProject.VisualStudio.Project.Automation
             {
                 if (fileName == null)
                 {
-                    throw new ArgumentNullException("fileName");
+                    throw new ArgumentNullException(nameof(fileName));
                 }
 
                 if (Node == null || Node.ProjectMgr == null || Node.ProjectMgr.IsClosed || Node.ProjectMgr.Site == null)
@@ -304,7 +304,7 @@ namespace VsTeXProject.VisualStudio.Project.Automation
                         {
                             // Not a valid guid
                             throw new ArgumentException(
-                                SR.GetString(SR.ParameterMustBeAValidGuid, CultureInfo.CurrentUICulture), "viewKind");
+                                SR.GetString(SR.ParameterMustBeAValidGuid, CultureInfo.CurrentUICulture), nameof(viewKind));
                         }
 
                         uint itemid;
@@ -404,7 +404,7 @@ namespace VsTeXProject.VisualStudio.Project.Automation
                 {
                     // Not a valid guid
                     throw new ArgumentException(
-                        SR.GetString(SR.ParameterMustBeAValidGuid, CultureInfo.CurrentUICulture), "viewKind");
+                        SR.GetString(SR.ParameterMustBeAValidGuid, CultureInfo.CurrentUICulture), nameof(viewKind));
                 }
 
                 var isOpen = false;

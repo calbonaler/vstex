@@ -91,7 +91,18 @@ namespace VsTeXProject.VisualStudio.Project
             this.taskProvider = taskProvider;
             OutputWindowPane = output;
             this.hierarchy = hierarchy;
-            ServiceProvider = new ServiceProvider(site);
+			ServiceProvider provider = null;
+			try
+			{
+				provider = new ServiceProvider(site);
+				ServiceProvider = provider;
+				provider = null;
+			}
+			finally
+			{
+				if (provider != null)
+					provider.Dispose();
+			}
             dispatcher = Dispatcher.CurrentDispatcher;
         }
 
@@ -144,11 +155,11 @@ namespace VsTeXProject.VisualStudio.Project
         private ConcurrentQueue<Func<ErrorTask>> taskQueue;
         private ConcurrentQueue<string> outputQueue;
 
-        #endregion
+		#endregion
 
-        #region properties
+		#region properties
 
-        public IServiceProvider ServiceProvider { get; }
+		public IServiceProvider ServiceProvider { get; }
 
         public string WarningString { get; set; } = SR.GetString(SR.Warning, CultureInfo.CurrentUICulture);
 

@@ -162,7 +162,7 @@ namespace VsTeXProject.VisualStudio.Project.Automation
                 //Verify that kind is null, empty, or a physical folder
                 if (!(string.IsNullOrEmpty(kind) || kind.Equals(Constants.vsProjectItemKindPhysicalFolder)))
                 {
-                    throw new ArgumentException("Parameter specification for AddFolder was not meet", "kind");
+                    throw new ArgumentException("Parameter specification for AddFolder was not meet", nameof(kind));
                 }
 
                 for (var child = NodeWithItems.FirstChild; child != null; child = child.NextSibling)
@@ -301,7 +301,7 @@ namespace VsTeXProject.VisualStudio.Project.Automation
             {
                 var component = components[i];
 
-                if (Path.GetExtension(component).Equals(".zip", StringComparison.InvariantCultureIgnoreCase))
+                if (Path.GetExtension(component).Equals(".zip", StringComparison.OrdinalIgnoreCase))
                 {
                     component = Path.GetFileNameWithoutExtension(component);
                     components[i] = component;
@@ -315,7 +315,7 @@ namespace VsTeXProject.VisualStudio.Project.Automation
             {
                 if (Path.IsPathRooted(components[0]))
                 {
-                    components[0] = string.Format("{0}{1}{2}", components[0], Path.DirectorySeparatorChar, components[1]);
+                    components[0] = components[0] + Path.DirectorySeparatorChar + components[1];
                     components[1] = string.Empty; // Path.Combine drops empty strings.
                 }
             }

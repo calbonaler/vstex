@@ -283,12 +283,6 @@
   <data name="PasteFailed" xml:space="preserve">
     <value>Item is not available or corrupted and thus cannot be pasted.</value>
   </data>
-  <data name="Program" xml:space="preserve">
-    <value>Program</value>
-  </data>
-  <data name="Project" xml:space="preserve">
-    <value>Project</value>
-  </data>
   <data name="ProjectContainsCircularReferences" xml:space="preserve">
     <value>A reference to library '{0}' cannot be added. Adding this project as a reference would cause a circular dependency. </value>
   </data>
@@ -527,14 +521,5 @@ Are you sure you want to change the Target Framework for this project?</value>
   </data>
   <data name="Picture" xml:space="preserve">
     <value>Picture File (generate xbb file)</value>
-  </data>
-  <data name="LaTeX" xml:space="preserve">
-    <value>latex</value>
-  </data>
-  <data name="pdfTeX" xml:space="preserve">
-    <value>pdftex</value>
-  </data>
-  <data name="pLaTeX" xml:space="preserve">
-    <value>platex</value>
   </data>
 </root>

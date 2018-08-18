@@ -47,6 +47,7 @@ a particular purpose and non-infringement.
 ********************************************************************************************/
 
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -144,9 +145,7 @@ namespace VsTeXProject.VisualStudio.Project.Automation
                 var builder = new StringBuilder();
                 var publicKeyToken = BaseReferenceNode.ResolvedAssembly.GetPublicKeyToken();
                 for (var i = 0; i < publicKeyToken.Length; i++)
-                {
-                    builder.AppendFormat("{0:x}", publicKeyToken[i]);
-                }
+                    builder.AppendFormat(CultureInfo.InvariantCulture, "{0:x}", publicKeyToken[i]);
                 return builder.ToString();
             }
         }

@@ -17,8 +17,7 @@ namespace VsTeXProject
     public class GeneralPropertyPage : SettingsPage
     {
         #region Fields
-        private OutputType outputType;
-        private TeXProcessor _teXProcessor;
+        private string _teXProcessor;
         private string _toolspath;
 
         #endregion Fields
@@ -36,26 +35,14 @@ namespace VsTeXProject
         #region Properties
 
         [ResourcesCategoryAttribute(Resources.Application)]
-        [LocDisplayName(Resources.OutputType)]
-        [ResourcesDescriptionAttribute(Resources.OutputTypeDescription)]
-        /// <summary>
-        /// Gets or sets OutputType.
-        /// </summary>
-        /// <remarks>IsDirty flag was switched to true.</remarks>
-        public OutputType OutputType
-        {
-            get { return this.outputType; }
-            set { this.outputType = value; this.IsDirty = true; }
-        }
-
-        [ResourcesCategoryAttribute(Resources.Application)]
         [LocDisplayName(Resources.TeXProcessor)]
         [ResourcesDescriptionAttribute(Resources.TeXProcessorDescription)]
+		[PropertyPageTypeConverter(typeof(TeXProcessorConverter))]
         /// <summary>
         /// Gets or sets TeX Processor.
         /// </summary>
         /// <remarks>IsDirty flag was switched to true.</remarks>
-        public TeXProcessor TeXProcessor
+        public string TeXProcessor
         {
             get { return this._teXProcessor; }
             set { this._teXProcessor = value; this.IsDirty = true; }
@@ -119,31 +106,7 @@ namespace VsTeXProject
                 return;
             }
 
-            string outputType = this.ProjectMgr.GetProjectProperty("OutputType", false);
-
-            if(outputType != null && outputType.Length > 0)
-            {
-                try
-                {
-                    this.outputType = (OutputType)Enum.Parse(typeof(OutputType), outputType);
-                }
-                catch(ArgumentException)
-                {
-                }
-            }
-
-            string texProcessor = this.ProjectMgr.GetProjectProperty("TeXProcessor", false);
-            if (texProcessor != null && texProcessor.Length > 0)
-            {
-                try
-                {
-                    this._teXProcessor = (TeXProcessor)Enum.Parse(typeof(TeXProcessor), texProcessor);
-                }
-                catch (ArgumentException)
-                {
-                }
-            }
-
+            this._teXProcessor = this.ProjectMgr.GetProjectProperty("TeXProcessor", false);
             this._toolspath = this.ProjectMgr.GetProjectProperty("ToolsPath", false);
         }
 
@@ -158,10 +121,7 @@ namespace VsTeXProject
                 return VSConstants.E_INVALIDARG;
             }
 
-            IVsPropertyPageFrame propertyPageFrame = (IVsPropertyPageFrame)this.ProjectMgr.Site.GetService((typeof(SVsPropertyPageFrame)));
-
-            this.ProjectMgr.SetProjectProperty("OutputType", this.outputType.ToString());
-            this.ProjectMgr.SetProjectProperty("TeXProcessor", this.TeXProcessor.ToString());
+            this.ProjectMgr.SetProjectProperty("TeXProcessor", this.TeXProcessor);
             this.ProjectMgr.SetProjectProperty("ToolsPath",this._toolspath);
 
             this.IsDirty = false;

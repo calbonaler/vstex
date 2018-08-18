@@ -150,40 +150,6 @@ namespace VsTeXProject.VisualStudio.Project
 
         #region public methods
 
-        public object GetTypedConfigProperty(string name, Type type)
-        {
-            var value = GetConfigProperty(name);
-            if (string.IsNullOrEmpty(value)) return null;
-
-            var tc = TypeDescriptor.GetConverter(type);
-            return tc.ConvertFromInvariantString(value);
-        }
-
-        public object GetTypedProperty(string name, Type type)
-        {
-            var value = GetProperty(name);
-            if (string.IsNullOrEmpty(value)) return null;
-
-            var tc = TypeDescriptor.GetConverter(type);
-            return tc.ConvertFromInvariantString(value);
-        }
-
-        public string GetProperty(string propertyName)
-        {
-            if (ProjectMgr != null)
-            {
-                string property;
-                var found = ProjectMgr.BuildProject.GlobalProperties.TryGetValue(propertyName, out property);
-
-                if (found)
-                {
-                    return property;
-                }
-            }
-
-            return string.Empty;
-        }
-
         // relative to active configuration.
         public string GetConfigProperty(string propertyName)
         {
@@ -461,11 +427,6 @@ namespace VsTeXProject.VisualStudio.Project
         #endregion
 
         #region helper methods
-
-        protected ProjectConfig[] GetProjectConfigurations()
-        {
-            return projectConfigs;
-        }
 
         protected void UpdateObjects()
         {

@@ -337,112 +337,6 @@ using System.Diagnostics.CodeAnalysis;
 [assembly:
     SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "0#",
         Scope = "member",
-        Target =
-            "VsTeXProject.VisualStudio.Project.UpdateSolutionEventsListener.#OnActiveProjectCfgChange(Microsoft.VisualStudio.Shell.Interop.IVsHierarchy)"
-        )]
-[assembly:
-    SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "1#",
-        Scope = "member",
-        Target =
-            "VsTeXProject.VisualStudio.Project.UpdateSolutionEventsListener.#OnAfterActiveSolutionCfgChange(Microsoft.VisualStudio.Shell.Interop.IVsCfg,Microsoft.VisualStudio.Shell.Interop.IVsCfg)"
-        )]
-[assembly:
-    SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "0#",
-        Scope = "member",
-        Target =
-            "VsTeXProject.VisualStudio.Project.UpdateSolutionEventsListener.#OnAfterActiveSolutionCfgChange(Microsoft.VisualStudio.Shell.Interop.IVsCfg,Microsoft.VisualStudio.Shell.Interop.IVsCfg)"
-        )]
-[assembly:
-    SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "1#",
-        Scope = "member",
-        Target =
-            "VsTeXProject.VisualStudio.Project.UpdateSolutionEventsListener.#OnBeforeActiveSolutionCfgChange(Microsoft.VisualStudio.Shell.Interop.IVsCfg,Microsoft.VisualStudio.Shell.Interop.IVsCfg)"
-        )]
-[assembly:
-    SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "0#",
-        Scope = "member",
-        Target =
-            "VsTeXProject.VisualStudio.Project.UpdateSolutionEventsListener.#OnBeforeActiveSolutionCfgChange(Microsoft.VisualStudio.Shell.Interop.IVsCfg,Microsoft.VisualStudio.Shell.Interop.IVsCfg)"
-        )]
-[assembly:
-    SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "3#",
-        Scope = "member",
-        Target =
-            "VsTeXProject.VisualStudio.Project.UpdateSolutionEventsListener.#UpdateProjectCfg_Begin(Microsoft.VisualStudio.Shell.Interop.IVsHierarchy,Microsoft.VisualStudio.Shell.Interop.IVsCfg,Microsoft.VisualStudio.Shell.Interop.IVsCfg,System.UInt32,System.Int32&)"
-        )]
-[assembly:
-    SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "4#",
-        Scope = "member",
-        Target =
-            "VsTeXProject.VisualStudio.Project.UpdateSolutionEventsListener.#UpdateProjectCfg_Begin(Microsoft.VisualStudio.Shell.Interop.IVsHierarchy,Microsoft.VisualStudio.Shell.Interop.IVsCfg,Microsoft.VisualStudio.Shell.Interop.IVsCfg,System.UInt32,System.Int32&)"
-        )]
-[assembly:
-    SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "1#",
-        Scope = "member",
-        Target =
-            "VsTeXProject.VisualStudio.Project.UpdateSolutionEventsListener.#UpdateProjectCfg_Begin(Microsoft.VisualStudio.Shell.Interop.IVsHierarchy,Microsoft.VisualStudio.Shell.Interop.IVsCfg,Microsoft.VisualStudio.Shell.Interop.IVsCfg,System.UInt32,System.Int32&)"
-        )]
-[assembly:
-    SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "2#",
-        Scope = "member",
-        Target =
-            "VsTeXProject.VisualStudio.Project.UpdateSolutionEventsListener.#UpdateProjectCfg_Begin(Microsoft.VisualStudio.Shell.Interop.IVsHierarchy,Microsoft.VisualStudio.Shell.Interop.IVsCfg,Microsoft.VisualStudio.Shell.Interop.IVsCfg,System.UInt32,System.Int32&)"
-        )]
-[assembly:
-    SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "0#",
-        Scope = "member",
-        Target =
-            "VsTeXProject.VisualStudio.Project.UpdateSolutionEventsListener.#UpdateProjectCfg_Begin(Microsoft.VisualStudio.Shell.Interop.IVsHierarchy,Microsoft.VisualStudio.Shell.Interop.IVsCfg,Microsoft.VisualStudio.Shell.Interop.IVsCfg,System.UInt32,System.Int32&)"
-        )]
-[assembly:
-    SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "3#",
-        Scope = "member",
-        Target =
-            "VsTeXProject.VisualStudio.Project.UpdateSolutionEventsListener.#UpdateProjectCfg_Done(Microsoft.VisualStudio.Shell.Interop.IVsHierarchy,Microsoft.VisualStudio.Shell.Interop.IVsCfg,Microsoft.VisualStudio.Shell.Interop.IVsCfg,System.UInt32,System.Int32,System.Int32)"
-        )]
-[assembly:
-    SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "5#",
-        Scope = "member",
-        Target =
-            "VsTeXProject.VisualStudio.Project.UpdateSolutionEventsListener.#UpdateProjectCfg_Done(Microsoft.VisualStudio.Shell.Interop.IVsHierarchy,Microsoft.VisualStudio.Shell.Interop.IVsCfg,Microsoft.VisualStudio.Shell.Interop.IVsCfg,System.UInt32,System.Int32,System.Int32)"
-        )]
-[assembly:
-    SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "1#",
-        Scope = "member",
-        Target =
-            "VsTeXProject.VisualStudio.Project.UpdateSolutionEventsListener.#UpdateProjectCfg_Done(Microsoft.VisualStudio.Shell.Interop.IVsHierarchy,Microsoft.VisualStudio.Shell.Interop.IVsCfg,Microsoft.VisualStudio.Shell.Interop.IVsCfg,System.UInt32,System.Int32,System.Int32)"
-        )]
-[assembly:
-    SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "2#",
-        Scope = "member",
-        Target =
-            "VsTeXProject.VisualStudio.Project.UpdateSolutionEventsListener.#UpdateProjectCfg_Done(Microsoft.VisualStudio.Shell.Interop.IVsHierarchy,Microsoft.VisualStudio.Shell.Interop.IVsCfg,Microsoft.VisualStudio.Shell.Interop.IVsCfg,System.UInt32,System.Int32,System.Int32)"
-        )]
-[assembly:
-    SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "0#",
-        Scope = "member",
-        Target =
-            "VsTeXProject.VisualStudio.Project.UpdateSolutionEventsListener.#UpdateProjectCfg_Done(Microsoft.VisualStudio.Shell.Interop.IVsHierarchy,Microsoft.VisualStudio.Shell.Interop.IVsCfg,Microsoft.VisualStudio.Shell.Interop.IVsCfg,System.UInt32,System.Int32,System.Int32)"
-        )]
-[assembly:
-    SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "4#",
-        Scope = "member",
-        Target =
-            "VsTeXProject.VisualStudio.Project.UpdateSolutionEventsListener.#UpdateProjectCfg_Done(Microsoft.VisualStudio.Shell.Interop.IVsHierarchy,Microsoft.VisualStudio.Shell.Interop.IVsCfg,Microsoft.VisualStudio.Shell.Interop.IVsCfg,System.UInt32,System.Int32,System.Int32)"
-        )]
-[assembly:
-    SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "0#",
-        Scope = "member",
-        Target = "VsTeXProject.VisualStudio.Project.UpdateSolutionEventsListener.#UpdateSolution_Begin(System.Int32&)")]
-[assembly:
-    SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "0#",
-        Scope = "member",
-        Target =
-            "VsTeXProject.VisualStudio.Project.UpdateSolutionEventsListener.#UpdateSolution_StartUpdate(System.Int32&)")
-]
-[assembly:
-    SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "0#",
-        Scope = "member",
         Target = "VsTeXProject.VisualStudio.Project.HierarchyNode.#DeleteItem(System.UInt32,System.UInt32)")]
 [assembly:
     SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "1#",
@@ -1379,9 +1273,6 @@ using System.Diagnostics.CodeAnalysis;
 [assembly:
     SuppressMessage("Microsoft.Interoperability", "CA1409:ComVisibleTypesShouldBeCreatable", Scope = "type",
         Target = "VsTeXProject.VisualStudio.Project.SingleFileGeneratorNodeProperties")]
-[assembly:
-    SuppressMessage("Microsoft.Interoperability", "CA1409:ComVisibleTypesShouldBeCreatable", Scope = "type",
-        Target = "VsTeXProject.VisualStudio.Project.Automation.OAVSProjectItem")]
 
 //PInvoke suppressions
 
@@ -1573,11 +1464,6 @@ using System.Diagnostics.CodeAnalysis;
 [assembly:
     SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Scope = "member",
         Target = "VsTeXProject.VisualStudio.Project.ConfigProvider.#NewConfigProperties")]
-[assembly:
-    SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Scope = "member",
-        Target =
-            "VsTeXProject.VisualStudio.Project.Utilities.#ConvertFromType`1(System.String,System.Globalization.CultureInfo)"
-        )]
 
 //Methods that swallows exceptions suppressions
 
@@ -2829,3 +2715,24 @@ using System.Diagnostics.CodeAnalysis;
         Target =
             "VsTeXProject.VisualStudio.Project.ConfigProvider.#AddCfgsOfCfgName(System.String,System.String,System.Int32)"
         )]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "0#", Scope = "member", Target = "VsTeXProject.VisualStudio.Project.Automation.OAReferences.#AddProject(EnvDTE.Project)")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Te")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Te", Scope = "namespace", Target = "VsTeXProject.VisualStudio.Project")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Te", Scope = "namespace", Target = "VsTeXProject.VisualStudio.Project.Automation")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Te", Scope = "type", Target = "VsTeXProject.VisualStudio.Project.TeXProcessor")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Te", Scope = "type", Target = "VsTeXProject.VisualStudio.Project.TeXProcessorConverter")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Vs")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Vs", Scope = "namespace", Target = "VsTeXProject.VisualStudio.Project")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Vs", Scope = "namespace", Target = "VsTeXProject.VisualStudio.Project.Automation")]
+[assembly: SuppressMessage("Microsoft.Interoperability", "CA1409:ComVisibleTypesShouldBeCreatable", Scope = "type", Target = "VsTeXProject.VisualStudio.Project.ComReferenceProperties")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Scope = "member", Target = "VsTeXProject.VisualStudio.Project.ReferenceContainerNode.#CreateReferenceNode(Microsoft.VisualStudio.Shell.Interop.VSCOMPONENTSELECTORDATA,System.String)")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Scope = "member", Target = "VsTeXProject.VisualStudio.Project.ReferenceContainerNode.#CreateFileComponent(Microsoft.VisualStudio.Shell.Interop.VSCOMPONENTSELECTORDATA,System.String)")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Scope = "member", Target = "VsTeXProject.VisualStudio.Project.ReferenceContainerNode.#CreateComReferenceNode(Microsoft.VisualStudio.Shell.Interop.VSCOMPONENTSELECTORDATA,System.String)")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Scope = "member", Target = "VsTeXProject.VisualStudio.Project.ReferenceContainerNode.#AddReferenceFromSelectorData(Microsoft.VisualStudio.Shell.Interop.VSCOMPONENTSELECTORDATA,System.String)")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Scope = "member", Target = "VsTeXProject.VisualStudio.Project.ProjectNode.#GetProjectOptions(System.String)")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Scope = "member", Target = "VsTeXProject.VisualStudio.Project.IReferenceContainer.#AddReferenceFromSelectorData(Microsoft.VisualStudio.Shell.Interop.VSCOMPONENTSELECTORDATA,System.String)")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Scope = "member", Target = "VsTeXProject.VisualStudio.Project.ComReferenceNode.#.ctor(VsTeXProject.VisualStudio.Project.ProjectNode,Microsoft.VisualStudio.Shell.Interop.VSCOMPONENTSELECTORDATA,System.String)")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1703:ResourceStringsShouldBeSpelledCorrectly", MessageId = "pdftex", Scope = "resource", Target = "VsTeXProject.VisualStudio.Project.resources")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1703:ResourceStringsShouldBeSpelledCorrectly", MessageId = "xbb", Scope = "resource", Target = "VsTeXProject.VisualStudio.Project.resources")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1703:ResourceStringsShouldBeSpelledCorrectly", MessageId = "platex", Scope = "resource", Target = "VsTeXProject.VisualStudio.Project.resources")]
+

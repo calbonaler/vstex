@@ -47,101 +47,52 @@ a particular purpose and non-infringement.
 ********************************************************************************************/
 
 using System;
-using System.Collections;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 
 namespace VsTeXProject.VisualStudio.Project
 {
-    /// <summary>
-    ///     Enables a managed object to expose properties and attributes for COM objects.
-    /// </summary>
-    [ComVisible(true)]
+	/// <summary>
+	///     Enables a managed object to expose properties and attributes for COM objects.
+	/// </summary>
+	[ComVisible(true)]
     public class LocalizableProperties : ICustomTypeDescriptor
     {
-        #region ICustomTypeDescriptor
+		#region ICustomTypeDescriptor
 
-        public virtual AttributeCollection GetAttributes()
-        {
-            var col = TypeDescriptor.GetAttributes(this, true);
-            return col;
-        }
+		public virtual AttributeCollection GetAttributes() => TypeDescriptor.GetAttributes(this, true);
 
-        public virtual EventDescriptor GetDefaultEvent()
-        {
-            var ed = TypeDescriptor.GetDefaultEvent(this, true);
-            return ed;
-        }
+		public virtual EventDescriptor GetDefaultEvent() => TypeDescriptor.GetDefaultEvent(this, true);
 
-        public virtual PropertyDescriptor GetDefaultProperty()
-        {
-            var pd = TypeDescriptor.GetDefaultProperty(this, true);
-            return pd;
-        }
+		public virtual PropertyDescriptor GetDefaultProperty() => TypeDescriptor.GetDefaultProperty(this, true);
 
-        public virtual object GetEditor(Type editorBaseType)
-        {
-            var o = TypeDescriptor.GetEditor(this, editorBaseType, true);
-            return o;
-        }
+		public virtual object GetEditor(Type editorBaseType) => TypeDescriptor.GetEditor(this, editorBaseType, true);
 
-        public virtual EventDescriptorCollection GetEvents()
-        {
-            var edc = TypeDescriptor.GetEvents(this, true);
-            return edc;
-        }
+		public virtual EventDescriptorCollection GetEvents() => TypeDescriptor.GetEvents(this, true);
 
-        public virtual EventDescriptorCollection GetEvents(Attribute[] attributes)
-        {
-            var edc = TypeDescriptor.GetEvents(this, attributes, true);
-            return edc;
-        }
+		public virtual EventDescriptorCollection GetEvents(Attribute[] attributes) => TypeDescriptor.GetEvents(this, attributes, true);
 
-        public virtual object GetPropertyOwner(PropertyDescriptor pd)
-        {
-            return this;
-        }
+		public virtual object GetPropertyOwner(PropertyDescriptor pd) => this;
 
-        public virtual PropertyDescriptorCollection GetProperties()
-        {
-            var pcol = GetProperties(null);
-            return pcol;
-        }
+		public virtual PropertyDescriptorCollection GetProperties() => GetProperties(null);
 
-        public virtual PropertyDescriptorCollection GetProperties(Attribute[] attributes)
+		public virtual PropertyDescriptorCollection GetProperties(Attribute[] attributes)
         {
-            var newList = new ArrayList();
             var props = TypeDescriptor.GetProperties(this, attributes, true);
-
+			var newArray = new DesignPropertyDescriptor[props.Count];
             for (var i = 0; i < props.Count; i++)
-                newList.Add(CreateDesignPropertyDescriptor(props[i]));
-
-            return new PropertyDescriptorCollection((PropertyDescriptor[]) newList.ToArray(typeof (PropertyDescriptor)));
-            ;
+                newArray[i] = CreateDesignPropertyDescriptor(props[i]);
+            return new PropertyDescriptorCollection(newArray);
         }
 
-        public virtual DesignPropertyDescriptor CreateDesignPropertyDescriptor(PropertyDescriptor propertyDescriptor)
-        {
-            return new DesignPropertyDescriptor(propertyDescriptor);
-        }
+		public virtual DesignPropertyDescriptor CreateDesignPropertyDescriptor(PropertyDescriptor propertyDescriptor) => new DesignPropertyDescriptor(propertyDescriptor);
 
-        public virtual string GetComponentName()
-        {
-            var name = TypeDescriptor.GetComponentName(this, true);
-            return name;
-        }
+		public virtual string GetComponentName() => TypeDescriptor.GetComponentName(this, true);
 
-        public virtual TypeConverter GetConverter()
-        {
-            var tc = TypeDescriptor.GetConverter(this, true);
-            return tc;
-        }
+		public virtual TypeConverter GetConverter() => TypeDescriptor.GetConverter(this, true);
 
-        public virtual string GetClassName()
-        {
-            return GetType().FullName;
-        }
+		public virtual string GetClassName() => GetType().FullName;
 
-        #endregion ICustomTypeDescriptor
-    }
+		#endregion ICustomTypeDescriptor
+	}
 }

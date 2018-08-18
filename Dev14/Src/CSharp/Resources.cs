@@ -178,8 +178,6 @@ namespace VsTeXProject.VisualStudio.Project
         internal const string ParameterCannotBeNullOrEmpty = "ParameterCannotBeNullOrEmpty";
         internal const string PathTooLong = "PathTooLong";
         internal const string ProjectContainsCircularReferences = "ProjectContainsCircularReferences";
-        internal const string Program = "Program";
-        internal const string Project = "Project";
         internal const string ProjectFile = "ProjectFile";
         internal const string ProjectFileDescription = "ProjectFileDescription";
         internal const string ProjectFolder = "ProjectFolder";
@@ -205,9 +203,6 @@ namespace VsTeXProject.VisualStudio.Project
         internal const string ReloadPromptOnTargetFxChangedCaption = "ReloadPromptOnTargetFxChangedCaption";
         internal const string pdf = "PdfDocument";
         internal const string Picture = "Picture";
-        internal const string pLaTeX = "platex";
-        internal const string LaTeX = "latex";
-        internal const string pdfTeX = "pdftex";
 
         private static SR loader;
 

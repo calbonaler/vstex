@@ -508,13 +508,9 @@ namespace VsTeXProject.VisualStudio.Project
             {
                 if (CustomTool != value)
                 {
-                    Node.ItemNode.SetMetadata(ProjectFileConstants.Generator, value != string.Empty ? value : null);
-                    var args = new HierarchyNodeEventArgs(Node);
-                    if (onCustomToolChanged != null)
-                    {
-                        onCustomToolChanged(Node, args);
-                    }
-                }
+                    Node.ItemNode.SetMetadata(ProjectFileConstants.Generator, !string.IsNullOrEmpty(value) ? value : null);
+					onCustomToolChanged?.Invoke(Node, new HierarchyNodeEventArgs(Node));
+				}
             }
         }
 

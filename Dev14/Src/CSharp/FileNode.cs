@@ -239,8 +239,7 @@ namespace VsTeXProject.VisualStudio.Project
 
         protected override NodeProperties CreatePropertiesObject()
         {
-            var generator = CreateSingleFileGenerator();
-
+            CreateSingleFileGenerator();
             return new SingleFileGeneratorNodeProperties(this);
         }
 

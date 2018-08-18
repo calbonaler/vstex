@@ -80,36 +80,6 @@ namespace VsTeXProject.VisualStudio.Project
     }
 
     /// <summary>
-    ///     Defines possible types of output that can produced by a language project
-    /// </summary>
-    [PropertyPageTypeConverter(typeof (OutputTypeConverter))]
-    public enum OutputType
-    {
-        pdf
-    }
-
-    /// <summary>
-    ///     TeX Processor.
-    /// </summary>
-    [PropertyPageTypeConverter(typeof (TeXProcessorConverter))]
-    public enum TeXProcessor
-    {
-        platex,
-        latex,
-        pdftex
-    }
-
-    /// <summary>
-    ///     Debug values used by DebugModeConverter.
-    /// </summary>
-    [PropertyPageTypeConverter(typeof (DebugModeConverter))]
-    public enum DebugMode
-    {
-        Project,
-        Program
-    }
-
-    /// <summary>
     ///     An enumeration that describes the type of action to be taken by the build.
     /// </summary>
     [PropertyPageTypeConverter(typeof (BuildActionConverter))]
@@ -484,38 +454,6 @@ namespace VsTeXProject.VisualStudio.Project
         private readonly _VSFILECHANGEFLAGS fileChangeFlag;
 
         #endregion
-    }
-
-    /// <summary>
-    ///     Defines the event args for the active configuration chnage event.
-    /// </summary>
-    public class ActiveConfigurationChangedEventArgs : EventArgs
-    {
-        #region Private fields
-
-        /// <summary>
-        ///     The hierarchy whose configuration has changed
-        /// </summary>
-        private readonly IVsHierarchy hierarchy;
-
-        #endregion
-
-        /// <summary>
-        ///     Constructs a new event args.
-        /// </summary>
-        /// <param name="fileName">The hierarchy that has changed its configuration.</param>
-        internal ActiveConfigurationChangedEventArgs(IVsHierarchy hierarchy)
-        {
-            this.hierarchy = hierarchy;
-        }
-
-        /// <summary>
-        ///     The hierarchy whose configuration has changed
-        /// </summary>
-        internal IVsHierarchy Hierarchy
-        {
-            get { return hierarchy; }
-        }
     }
 
     /// <summary>

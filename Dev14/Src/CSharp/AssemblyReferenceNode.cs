@@ -285,7 +285,7 @@ namespace VsTeXProject.VisualStudio.Project
         ///     the location of the assemblies to decide whether two assemblies are the same.
         /// </summary>
         /// <returns>true if the assembly has already been added.</returns>
-        protected internal override bool IsAlreadyAdded(out ReferenceNode existingReference)
+        protected internal override bool IsAlreadyAdded(out ReferenceNode existingEquivalentNode)
         {
             var referencesFolder =
                 ProjectMgr.FindChild(ReferenceContainerNode.ReferencesNodeVirtualName) as ReferenceContainerNode;
@@ -303,13 +303,13 @@ namespace VsTeXProject.VisualStudio.Project
                             StringComparison.OrdinalIgnoreCase) == 0 ||
                         (shouldCheckPath && NativeMethods.IsSamePath(assemblyReferenceNode.Url, Url)))
                     {
-                        existingReference = assemblyReferenceNode;
+                        existingEquivalentNode = assemblyReferenceNode;
                         return true;
                     }
                 }
             }
 
-            existingReference = null;
+            existingEquivalentNode = null;
             return false;
         }
 

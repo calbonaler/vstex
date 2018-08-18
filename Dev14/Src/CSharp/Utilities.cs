@@ -72,62 +72,7 @@ namespace VsTeXProject.VisualStudio.Project
 {
     public static class Utilities
     {
-        private const string defaultMSBuildVersion = "4.0";
-
         private static readonly char[] curlyBraces = {'{', '}'};
-
-        /// <summary>
-        ///     Look in the registry under the current hive for the path
-        ///     of MSBuild
-        /// </summary>
-        /// <returns></returns>
-        [CLSCompliant(false)]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ms")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "msbuild")]
-        public static string GetMsBuildPath(IServiceProvider serviceProvider)
-        {
-            return GetMsBuildPath(serviceProvider, defaultMSBuildVersion);
-        }
-
-        /// <summary>
-        ///     Search the registry for the tools path for MSBuild.
-        /// </summary>
-        /// <param name="serviceProvider">The service provider.</param>
-        /// <param name="version">Msbuild version.</param>
-        /// <returns>The msbuild tools path</returns>
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ms")]
-        public static string GetMsBuildPath(IServiceProvider serviceProvider, string version)
-        {
-            string msBuildPath = null;
-            using (
-                var root = VSRegistry.RegistryRoot(serviceProvider, __VsLocalRegistryType.RegType_Configuration, false))
-            {
-                // Get the value from the registry
-                using (var vsKey = root.OpenSubKey("MSBuild", false))
-                {
-                    msBuildPath = (string) vsKey.GetValue("MSBuildBinPath", null);
-                }
-            }
-            if (!string.IsNullOrEmpty(msBuildPath))
-            {
-                return msBuildPath;
-            }
-
-            // The path to MSBuild was not found in the VisualStudio's registry hive, so try to
-            // find it in the new MSBuild hive.
-            var registryPath = string.Format(CultureInfo.InvariantCulture,
-                "Software\\Microsoft\\MSBuild\\ToolsVersions\\{0}", version);
-            using (var msbuildKey = Registry.LocalMachine.OpenSubKey(registryPath, false))
-            {
-                msBuildPath = (string) msbuildKey.GetValue("MSBuildToolsPath", null);
-            }
-            if (string.IsNullOrEmpty(msBuildPath))
-            {
-                var error = SR.GetString(SR.ErrorMsBuildRegistration, CultureInfo.CurrentUICulture);
-                throw new FileLoadException(error);
-            }
-            return msBuildPath;
-        }
 
         /// <summary>
         ///     Is Visual Studio in design mode.
@@ -451,7 +396,6 @@ namespace VsTeXProject.VisualStudio.Project
             return currentConfigName;
         }
 
-
         /// <summary>
         ///     Verifies that two objects represent the same instance of a COM object.
         ///     This essentially compares the IUnkown pointers of the 2 objects.
@@ -623,93 +567,6 @@ namespace VsTeXProject.VisualStudio.Project
         }
 
         /// <summary>
-        ///     Helper method to call a converter explicitely to convert to an enum type
-        /// </summary>
-        /// <typeparam name="T">THe enum to convert to</typeparam>
-        /// <typeparam name="V">The converter that will be created</typeparam>
-        /// <param name="value">The enum value to be converted to</param>
-        /// <param name="typeToConvert">The type to convert</param>
-        /// <param name="culture">The culture to use to read the localized strings</param>
-        /// <returns></returns>
-        [CLSCompliant(false)]
-        public static object ConvertToType<T>(T value, Type typeToConvert, CultureInfo culture)
-            where T : struct
-        {
-            var converter = GetEnumConverter<T>();
-            if (converter == null)
-            {
-                return null;
-            }
-            if (converter.CanConvertTo(typeToConvert))
-            {
-                return converter.ConvertTo(null, culture, value, typeToConvert);
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        ///     Helper method for converting from a string to an enum using a converter.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="value"></param>
-        /// <param name="culture">The culture to use to read the localized strings</param>
-        /// <returns></returns>
-        [CLSCompliant(false)]
-        public static T? ConvertFromType<T>(string value, CultureInfo culture)
-            where T : struct
-        {
-            var returnValue = new T?();
-
-            returnValue = returnValue.GetValueOrDefault();
-
-            if (value == null)
-            {
-                return returnValue;
-            }
-
-            var converter = GetEnumConverter<T>();
-            if (converter == null)
-            {
-                return returnValue;
-            }
-
-            if (converter.CanConvertFrom(value.GetType()))
-            {
-                var converted = converter.ConvertFrom(null, culture, value);
-
-                if (converted != null && converted is T)
-                {
-                    returnValue = (T) converted;
-                }
-            }
-
-            return returnValue;
-        }
-
-
-        /// <summary>
-        ///     Sets a string value from an enum
-        /// </summary>
-        /// <typeparam name="T">The enum type</typeparam>
-        /// <param name="enumValue">The value of teh enum.</param>
-        /// <returns></returns>
-        [CLSCompliant(false)]
-        public static string SetStringValueFromConvertedEnum<T>(T enumValue, CultureInfo culture)
-            where T : struct
-        {
-            var convertToType = ConvertToType(enumValue, typeof (string), culture) as string;
-
-            if (convertToType == null)
-            {
-                return string.Empty;
-            }
-
-            return convertToType;
-        }
-
-
-        /// <summary>
         ///     Initializes the in memory project. Sets BuildEnabled on the project to true.
         /// </summary>
         /// <param name="engine">The build engine to use to create a build project.</param>
@@ -819,32 +676,6 @@ namespace VsTeXProject.VisualStudio.Project
             }
 
             return hierarchy;
-        }
-
-        /// <summary>
-        ///     Gets an instance of an EnumConverter for enums that have PropertyPageTypeConverter attribute
-        /// </summary>
-        /// <typeparam name="T">The type to search for the PropertyPageTypeConverter attribute.</typeparam>
-        /// <returns>An instance of an enum converter, or null if none found.</returns>
-        private static EnumConverter GetEnumConverter<T>()
-            where T : struct
-        {
-            var attributes = typeof (T).GetCustomAttributes(typeof (PropertyPageTypeConverterAttribute), true);
-
-            // There should be only one PropertyPageTypeConverterAttribute defined on T
-            if (attributes != null && attributes.Length == 1)
-            {
-                Debug.Assert(attributes[0] is PropertyPageTypeConverterAttribute,
-                    "The returned attribute must be an attribute is PropertyPageTypeConverterAttribute");
-                var converterAttribute = (PropertyPageTypeConverterAttribute) attributes[0];
-
-                if (converterAttribute.ConverterType.IsSubclassOf(typeof (EnumConverter)))
-                {
-                    return Activator.CreateInstance(converterAttribute.ConverterType) as EnumConverter;
-                }
-            }
-
-            return null;
         }
 
         /// <summary>
@@ -978,7 +809,6 @@ namespace VsTeXProject.VisualStudio.Project
             return fullPath;
         }
 
-
         /// <summary>
         ///     Determines if a file is a template.
         /// </summary>
@@ -994,83 +824,6 @@ namespace VsTeXProject.VisualStudio.Project
             var extension = Path.GetExtension(fileName);
             return string.Compare(extension, ".vstemplate", StringComparison.OrdinalIgnoreCase) == 0 ||
                    string.Compare(extension, ".vsz", StringComparison.OrdinalIgnoreCase) == 0;
-        }
-
-        /// <summary>
-        ///     Retrives the configuration and the platform using the IVsSolutionBuildManager2 interface.
-        /// </summary>
-        /// <param name="serviceProvider">A service provider.</param>
-        /// <param name="hierarchy">
-        ///     The hierarchy whose configuration is requested.  This method calls into
-        ///     native code and may be called on a background thread, so make sure the IVsHierarchy passed is
-        ///     safe to use for that sort of interop.
-        /// </param>
-        /// <param name="configuration">The name of the active configuration.</param>
-        /// <param name="platform">The name of the platform.</param>
-        /// <returns>true if successfull.</returns>
-        internal static bool TryGetActiveConfigurationAndPlatform(IServiceProvider serviceProvider,
-            IVsHierarchy hierarchy, out string configuration, out string platform)
-        {
-            if (serviceProvider == null)
-            {
-                throw new ArgumentNullException("serviceProvider");
-            }
-
-            if (hierarchy == null)
-            {
-                throw new ArgumentNullException("hierarchy");
-            }
-
-            configuration = string.Empty;
-            platform = string.Empty;
-
-            var solutionBuildManager =
-                serviceProvider.GetService(typeof (SVsSolutionBuildManager)) as IVsSolutionBuildManager2;
-
-            if (solutionBuildManager == null)
-            {
-                return false;
-            }
-
-            var activeConfigs = new IVsProjectCfg[1];
-            ErrorHandler.ThrowOnFailure(solutionBuildManager.FindActiveProjectCfg(IntPtr.Zero, IntPtr.Zero, hierarchy,
-                activeConfigs));
-
-            var activeCfg = activeConfigs[0];
-
-            // Can it be that the activeCfg is null?
-            Debug.Assert(activeCfg != null, "Cannot find the active configuration");
-
-            string canonicalName;
-            ErrorHandler.ThrowOnFailure(activeCfg.get_CanonicalName(out canonicalName));
-
-            return ProjectConfig.TrySplitConfigurationCanonicalName(canonicalName, out configuration, out platform);
-        }
-
-        /// <summary>
-        ///     Determines whether the shell is in command line mode.
-        /// </summary>
-        /// <param name="serviceProvider">A reference to a Service Provider.</param>
-        /// <returns>true if the shell is in command line mode. false otherwise.</returns>
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal static bool IsShellInCommandLineMode(IServiceProvider serviceProvider)
-        {
-            if (serviceProvider == null)
-            {
-                throw new ArgumentNullException("serviceProvider");
-            }
-
-            var shell = serviceProvider.GetService(typeof (SVsShell)) as IVsShell;
-            if (shell == null)
-            {
-                throw new InvalidOperationException();
-            }
-
-            object isInCommandLineModeAsObject;
-            ErrorHandler.ThrowOnFailure(shell.GetProperty((int) __VSSPROPID.VSSPROPID_IsInCommandLineMode,
-                out isInCommandLineModeAsObject));
-
-            return (bool) isInCommandLineModeAsObject;
         }
     }
 }

@@ -109,10 +109,6 @@ namespace VsTeXProject.VisualStudio.Project
 
         #region fields
 
-        private static readonly Lazy<IVsTaskSchedulerService> taskSchedulerService =
-            new Lazy<IVsTaskSchedulerService>(
-                () => Package.GetGlobalService(typeof (SVsTaskSchedulerService)) as IVsTaskSchedulerService);
-
         /// <summary>
         ///     The msbuild engine that we are going to use.
         /// </summary>
@@ -146,39 +142,6 @@ namespace VsTeXProject.VisualStudio.Project
         {
             get { return buildProject; }
             set { buildProject = value; }
-        }
-
-        #endregion
-
-        #region methods
-
-        public virtual bool CanCreateProjectAsynchronously(ref Guid rguidProjectID, string filename, uint flags)
-        {
-            return true;
-        }
-
-        public void OnBeforeCreateProjectAsync(ref Guid rguidProjectID, string filename, string location, string pszName,
-            uint flags)
-        {
-        }
-
-        public virtual IVsTask CreateProjectAsync(ref Guid rguidProjectID, string filename, string location,
-            string pszName, uint flags)
-        {
-            var iid = typeof (IVsHierarchy).GUID;
-            return VsTaskLibraryHelper.CreateAndStartTask(taskSchedulerService.Value,
-                VsTaskRunContext.UIThreadBackgroundPriority, VsTaskLibraryHelper.CreateTaskBody(() =>
-                {
-                    IntPtr project;
-                    int cancelled;
-                    CreateProject(filename, location, pszName, flags, ref iid, out project, out cancelled);
-                    if (cancelled != 0)
-                    {
-                        throw new OperationCanceledException();
-                    }
-
-                    return Marshal.GetObjectForIUnknown(project);
-                }));
         }
 
         #endregion

@@ -119,18 +119,12 @@ namespace VsTeXProject.VisualStudio.Project
         }
 
         public bool EmbedInteropTypes
-        {
-            get
-            {
-                bool value;
-                bool.TryParse(ItemNode.GetMetadata(ProjectFileConstants.EmbedInteropTypes), out value);
-                return value;
-            }
+		{
+			get => bool.TryParse(ItemNode.GetMetadata(ProjectFileConstants.EmbedInteropTypes), out var value) ? value : false;
+			set => ItemNode.SetMetadata(ProjectFileConstants.EmbedInteropTypes, value.ToString());
+		}
 
-            set { ItemNode.SetMetadata(ProjectFileConstants.EmbedInteropTypes, value.ToString()); }
-        }
-
-        public string WrapperTool
+		public string WrapperTool
         {
             get { return ItemNode.GetMetadata(ProjectFileConstants.WrapperTool); }
             set { ItemNode.SetMetadata(ProjectFileConstants.WrapperTool, value); }
@@ -258,7 +252,7 @@ namespace VsTeXProject.VisualStudio.Project
         ///     Guid.
         /// </summary>
         /// <returns>true if the assembly has already been added.</returns>
-        protected internal override bool IsAlreadyAdded(out ReferenceNode existingReference)
+        protected internal override bool IsAlreadyAdded(out ReferenceNode existingEquivalentNode)
         {
             var referencesFolder =
                 ProjectMgr.FindChild(ReferenceContainerNode.ReferencesNodeVirtualName) as ReferenceContainerNode;
@@ -274,13 +268,13 @@ namespace VsTeXProject.VisualStudio.Project
                     if (referenceNode.TypeGuid == TypeGuid &&
                         string.Compare(referenceNode.Caption, Caption, StringComparison.OrdinalIgnoreCase) == 0)
                     {
-                        existingReference = referenceNode;
+                        existingEquivalentNode = referenceNode;
                         return true;
                     }
                 }
             }
 
-            existingReference = null;
+            existingEquivalentNode = null;
             return false;
         }
 

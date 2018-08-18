@@ -545,9 +545,9 @@ namespace VsTeXProject.VisualStudio.Project
 
         private static Guid addComponentLastActiveTab = VSConstants.GUID_SolutionPage;
 
-        private static readonly uint addComponentDialogSizeX = 0;
+        private const uint addComponentDialogSizeX = 0;
 
-        private static readonly uint addComponentDialogSizeY = 0;
+        private const uint addComponentDialogSizeY = 0;
 
         /// <summary>
         ///     List of output groups names and their associated target
@@ -2578,8 +2578,7 @@ namespace VsTeXProject.VisualStudio.Project
             return options;
         }
 
-        public virtual void OnTargetFrameworkMonikerChanged(ProjectOptions options, FrameworkName currentTargetFramework,
-            FrameworkName newTargetFramework)
+        public virtual void OnTargetFrameworkMonikerChanged(ProjectOptions options, FrameworkName currentTargetFramework, FrameworkName newTargetFramework)
         {
             if (currentTargetFramework == null)
             {
@@ -4033,49 +4032,6 @@ namespace VsTeXProject.VisualStudio.Project
                 return string.Compare(node2.Caption, node1.Caption, true, CultureInfo.CurrentCulture);
             }
             return node2.SortPriority - node1.SortPriority;
-        }
-
-        /// <summary>
-        ///     Handles global properties related to configuration and platform changes invoked by a change in the active
-        ///     configuration.
-        /// </summary>
-        /// <param name="sender">The sender of the event.</param>
-        /// <param name="eventArgs">The event args</param>
-        [SuppressMessage("Microsoft.Security", "CA2109:ReviewVisibleEventHandlers",
-            Justification =
-                "This method will give the opportunity to update global properties based on active configuration change. " +
-                "There is no security threat that could otherwise not be reached by listening to configuration chnage events."
-            )]
-        protected virtual void OnHandleConfigurationRelatedGlobalProperties(object sender,
-            ActiveConfigurationChangedEventArgs eventArgs)
-        {
-            Debug.Assert(eventArgs != null, "Wrong hierarchy passed as event arg for the configuration change listener.");
-
-            // If (eventArgs.Hierarchy == NULL) then we received this event because the solution configuration
-            // was changed.
-            // If it is not null we got the event because a project in teh configuration manager has changed its active configuration.
-            // We care only about our project in the default implementation.
-            if (eventArgs == null || eventArgs.Hierarchy == null ||
-                !Utilities.IsSameComObject(eventArgs.Hierarchy, InteropSafeIVsHierarchy))
-            {
-                return;
-            }
-
-            string name, platform;
-            if (!Utilities.TryGetActiveConfigurationAndPlatform(Site, InteropSafeIVsHierarchy, out name, out platform))
-            {
-                throw new InvalidOperationException();
-            }
-
-            buildProject.SetGlobalProperty(GlobalProperty.Configuration.ToString(), name);
-
-            // If the platform is "Any CPU" then it should be set to AnyCPU, since that is the property value in MsBuild terms.
-            if (string.Compare(platform, ConfigProvider.AnyCPUPlatform, StringComparison.Ordinal) == 0)
-            {
-                platform = ProjectFileValues.AnyCPU;
-            }
-
-            buildProject.SetGlobalProperty(GlobalProperty.Platform.ToString(), platform);
         }
 
         /// <summary>
@@ -6362,7 +6318,7 @@ namespace VsTeXProject.VisualStudio.Project
             if (solution != null)
             {
                 // We do not want to throw. If we cannot set the solution related constants we set them to empty string.
-                solution.GetSolutionInfo(out solutionDirectory, out solutionFile, out userOptionsFile);
+                Marshal.ThrowExceptionForHR(solution.GetSolutionInfo(out solutionDirectory, out solutionFile, out userOptionsFile));
             }
 
             if (solutionDirectory == null)
@@ -6403,7 +6359,7 @@ namespace VsTeXProject.VisualStudio.Project
             if (shell != null)
             {
                 // We do not want to throw. If we cannot set the solution related constants we set them to empty string.
-                shell.GetProperty((int) __VSSPROPID.VSSPROPID_InstallDirectory, out installDirAsObject);
+                Marshal.ThrowExceptionForHR(shell.GetProperty((int) __VSSPROPID.VSSPROPID_InstallDirectory, out installDirAsObject));
             }
 
             var installDir = (string) installDirAsObject;
@@ -6605,13 +6561,9 @@ namespace VsTeXProject.VisualStudio.Project
             }
 
             IEnumComponents enumerator;
-            Marshal.ThrowExceptionForHR(enumFactory.GetReferencePathsForTargetFramework(
-                TargetFrameworkMoniker.FullName, out enumerator));
+            Marshal.ThrowExceptionForHR(enumFactory.GetReferencePathsForTargetFramework(TargetFrameworkMoniker.FullName, out enumerator));
             if (enumerator == null)
-            {
-                throw new ApplicationException(
-                    "IVsComponentEnumeratorFactory4.GetReferencePathsForTargetFramework returned null.");
-            }
+                throw new InvalidOperationException("IVsComponentEnumeratorFactory4.GetReferencePathsForTargetFramework returned null.");
 
             var paths = new StringBuilder();
             var data = new VSCOMPONENTSELECTORDATA[1];

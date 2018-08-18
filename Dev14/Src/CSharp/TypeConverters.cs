@@ -57,311 +57,54 @@ using Microsoft.VisualStudio.Shell.Interop;
 
 namespace VsTeXProject.VisualStudio.Project
 {
-    public class OutputTypeConverter : EnumConverter
-    {
-        public OutputTypeConverter()
-            : base(typeof (OutputType))
-        {
-        }
-
-        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
-        {
-            if (sourceType == typeof (string)) return true;
-
-            return base.CanConvertFrom(context, sourceType);
-        }
-
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
-        {
-            var str = value as string;
-
-            if (str != null)
-            {
-                if (str == SR.GetString(SR.pdf, culture)) return OutputType.pdf;
-            }
-
-            return base.ConvertFrom(context, culture, value);
-        }
-
-        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value,
-            Type destinationType)
-        {
-            if (destinationType == typeof (string))
-            {
-                string result = null;
-                // In some cases if multiple nodes are selected the windows form engine
-                // calls us with a null value if the selected node's property values are not equal
-                if (value != null)
-                {
-                    result = SR.GetString(((OutputType) value).ToString(), culture);
-                }
-                else
-                {
-                    result = SR.GetString(OutputType.pdf.ToString(), culture);
-                }
-
-                if (result != null) return result;
-            }
-
-            return base.ConvertTo(context, culture, value, destinationType);
-        }
-
-        public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
-        {
-            return true;
-        }
-
-        public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
-        {
-            return new StandardValuesCollection(new[] {OutputType.pdf});
-        }
-    }
-
-    public class DebugModeConverter : EnumConverter
-    {
-        public DebugModeConverter()
-            : base(typeof (DebugMode))
-        {
-        }
-
-        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
-        {
-            if (sourceType == typeof (string)) return true;
-
-            return base.CanConvertFrom(context, sourceType);
-        }
-
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
-        {
-            var str = value as string;
-
-            if (str != null)
-            {
-                if (str == SR.GetString(SR.Program, culture)) return DebugMode.Program;
-
-                if (str == SR.GetString(SR.Project, culture)) return DebugMode.Project;
-            }
-
-            return base.ConvertFrom(context, culture, value);
-        }
-
-        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value,
-            Type destinationType)
-        {
-            if (destinationType == typeof (string))
-            {
-                string result = null;
-                // In some cases if multiple nodes are selected the windows form engine
-                // calls us with a null value if the selected node's property values are not equal
-                if (value != null)
-                {
-                    result = SR.GetString(((DebugMode) value).ToString(), culture);
-                }
-                else
-                {
-                    result = SR.GetString(DebugMode.Program.ToString(), culture);
-                }
-
-                if (result != null) return result;
-            }
-
-            return base.ConvertTo(context, culture, value, destinationType);
-        }
-
-        public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
-        {
-            return true;
-        }
-
-        public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
-        {
-            return new StandardValuesCollection(new[] {DebugMode.Program, DebugMode.Project});
-        }
-    }
-
     public class BuildActionConverter : EnumConverter
     {
-        public BuildActionConverter()
-            : base(typeof (BuildAction))
-        {
-        }
+        public BuildActionConverter() : base(typeof (BuildAction)) { }
 
-        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
-        {
-            if (sourceType == typeof (string)) return true;
+		public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType) => sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
 
-            return base.CanConvertFrom(context, sourceType);
-        }
-
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+		public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             var str = value as string;
-
             if (str != null)
             {
                 if (str == SR.GetString(SR.Compile, culture)) return BuildAction.Compile;
-
                 if (str == SR.GetString(SR.Picture, culture)) return BuildAction.Picture;
-
                 if (str == SR.GetString(SR.Content, culture)) return BuildAction.Content;
             }
-
             return BuildAction.Content;
         }
 
-        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value,
-            Type destinationType)
+        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             if (destinationType == typeof (string))
             {
-                string result = null;
-
-                // In some cases if multiple nodes are selected the windows form engine
-                // calls us with a null value if the selected node's property values are not equal
+                // In some cases if multiple nodes are selected the windows form engine calls us with a null value if the selected node's property values are not equal
                 // Example of windows form engine passing us null: File set to Compile, Another file set to None, bot nodes are selected, and the build action combo is clicked.
-                if (value != null)
-                {
-                    result = SR.GetString(((BuildAction) value).ToString(), culture);
-                }
-                else
-                {
-                    result = SR.GetString(BuildAction.Content.ToString(), culture);
-                }
-
-                if (result != null) return result;
+                return SR.GetString((value != null ? (BuildAction)value : BuildAction.Content).ToString(), culture);
             }
-
             return base.ConvertTo(context, culture, value, destinationType);
         }
 
-        public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
-        {
-            return true;
-        }
+		public override bool GetStandardValuesSupported(ITypeDescriptorContext context) => true;
 
-        public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
-        {
-            return new StandardValuesCollection(new[] {BuildAction.Compile, BuildAction.Picture, BuildAction.Content});
-        }
-    }
+		public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context) => new StandardValuesCollection(new[] { BuildAction.Compile, BuildAction.Picture, BuildAction.Content });
+	}
 
-    public class FrameworkNameConverter : TypeConverter
-    {
-        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
-        {
-            if (sourceType == typeof (string)) return true;
+	public class TeXProcessorConverter : TypeConverter
+	{
+		readonly string[] standardValues = new string[] { "platex", "uplatex", "latex", "pdflatex", "lualatex", "xelatex" };
 
-            return base.CanConvertFrom(context, sourceType);
-        }
+		public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType) => sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
 
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
-        {
-            var str = value as string;
+		public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value) => value is string str ? value : base.ConvertFrom(context, culture, value);
 
-            if (str != null)
-            {
-                return new FrameworkName(str);
-            }
+		public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) => destinationType == typeof(string) || base.CanConvertTo(context, destinationType);
 
-            return base.ConvertFrom(context, culture, value);
-        }
+		public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType) => destinationType == typeof(string) ? ((string)value ?? standardValues[0]) : base.ConvertTo(context, culture, value, destinationType);
 
-        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value,
-            Type destinationType)
-        {
-            if (destinationType == typeof (string))
-            {
-                var name = value as FrameworkName;
-                if (name != null)
-                {
-                    return name.FullName;
-                }
-            }
+		public override bool GetStandardValuesSupported(ITypeDescriptorContext context) => true;
 
-            return base.ConvertTo(context, culture, value, destinationType);
-        }
-
-        public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
-        {
-            return true;
-        }
-
-        public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
-        {
-            IServiceProvider sp = ProjectNode.ServiceProvider;
-            var multiTargetService = sp.GetService(typeof (SVsFrameworkMultiTargeting)) as IVsFrameworkMultiTargeting;
-            if (multiTargetService == null)
-            {
-                Trace.TraceError("Unable to acquire the SVsFrameworkMultiTargeting service.");
-                return new StandardValuesCollection(new string[0]);
-            }
-            Array frameworks;
-            Marshal.ThrowExceptionForHR(multiTargetService.GetSupportedFrameworks(out frameworks));
-            return new StandardValuesCollection(
-                frameworks.Cast<string>().Select(fx => new FrameworkName(fx)).ToArray()
-                );
-        }
-    }
-
-    public class TeXProcessorConverter : EnumConverter
-    {
-        public TeXProcessorConverter()
-            : base(typeof (TeXProcessor))
-        {
-        }
-
-        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
-        {
-            if (sourceType == typeof (string)) return true;
-
-            return base.CanConvertFrom(context, sourceType);
-        }
-
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
-        {
-            var str = value as string;
-
-            if (str != null)
-            {
-                if (str == SR.GetString(SR.pLaTeX, culture)) return TeXProcessor.platex;
-                if (str == SR.GetString(SR.LaTeX, culture)) return TeXProcessor.latex;
-                if (str == SR.GetString(SR.pdfTeX, culture)) return TeXProcessor.pdftex;
-            }
-
-            return base.ConvertFrom(context, culture, value);
-        }
-
-        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value,
-            Type destinationType)
-        {
-            if (destinationType == typeof (string))
-            {
-                string result = null;
-                // In some cases if multiple nodes are selected the windows form engine
-                // calls us with a null value if the selected node's property values are not equal
-                if (value != null)
-                {
-                    result = SR.GetString(((TeXProcessor) value).ToString(), culture);
-                }
-                else
-                {
-                    result = SR.GetString(TeXProcessor.platex.ToString(), culture);
-                }
-
-                if (result != null) return result;
-            }
-
-            return base.ConvertTo(context, culture, value, destinationType);
-        }
-
-        public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
-        {
-            return true;
-        }
-
-        public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
-        {
-            return new StandardValuesCollection(new[] {TeXProcessor.platex, TeXProcessor.latex, TeXProcessor.pdftex});
-        }
-    }
+		public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context) => new StandardValuesCollection(standardValues);
+	}
 }

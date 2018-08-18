@@ -23,8 +23,8 @@ namespace VsTeXProject
     [PackageRegistration(UseManagedResourcesOnly = true)]
     [DefaultRegistryRoot("Software\\Microsoft\\VisualStudio\\14.0")]
     [ProvideObject(typeof(GeneralPropertyPage))]
-    [ProvideProjectFactory(typeof(TeXProjectFactory), "TeX Project", "TeX Project Files (*.texproj);*.texproj", "texproj", "texproj", @"..\..\Templates\Projects\TeXProject", LanguageVsTemplate = "TeXProject", NewProjectRequireNewFolderVsTemplate = false)]
-    [ProvideProjectItem(typeof(TeXProjectFactory), "TeX Items", @"..\..\Templates\ProjectItems\TeXProject", 500)]
+    [ProvideProjectFactory(typeof(TeXProjectFactory), "TeX Project", "TeX Project Files (*.texproj);*.texproj", "texproj", "texproj", @"Templates\Projects\TeXProject", LanguageVsTemplate = "TeXProject", NewProjectRequireNewFolderVsTemplate = false)]
+    [ProvideProjectItem(typeof(TeXProjectFactory), "TeX Items", @"Templates\ProjectItems\TeXProject", 500)]
     [Guid(GuidStrings.guidCustomProjectPkgString)]
     public sealed class CustomProjectPackage : ProjectPackage
     {

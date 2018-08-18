@@ -101,10 +101,11 @@ namespace VsTeXProject.VisualStudio.Project
             get { return uithread == Thread.CurrentThread; }
         }
 
-        /// <summary>
-        ///     Gets a value indicating whether unit tests are running.
-        /// </summary>
-        internal static bool IsUnitTest { get; set; }
+		/// <summary>
+		///     Gets a value indicating whether unit tests are running.
+		/// </summary>
+		[SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+		internal static bool IsUnitTest { get; set; }
 
         #region IDisposable Members
 
@@ -226,7 +227,11 @@ namespace VsTeXProject.VisualStudio.Project
         /// </summary>
         internal static T DoOnUIThread<T>(Func<T> callback)
         {
-            return ThreadHelper.Generic.Invoke(callback);
+			return ThreadHelper.JoinableTaskFactory.Run(async () =>
+			{
+				await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+				return callback();
+			});
         }
 
         /// <summary>
@@ -235,7 +240,11 @@ namespace VsTeXProject.VisualStudio.Project
         /// </summary>
         internal static void DoOnUIThread(Action callback)
         {
-            ThreadHelper.Generic.Invoke(callback);
+			ThreadHelper.JoinableTaskFactory.Run(async () =>
+			{
+				await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+				callback();
+			});
         }
 
         /// <summary>
